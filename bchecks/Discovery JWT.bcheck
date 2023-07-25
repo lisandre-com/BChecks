@@ -1,0 +1,15 @@
+metadata:
+    language: v1-beta
+    name: "BCheck Discovery JWT (passive)"
+    description: "A JSON Web Token (JWT) was found."
+    author: "Lisandre.com"
+    tags: "passive"
+
+given response then
+    if {latest.response} matches "=ey.*\..*\..*;" then
+        report issue:
+            severity: info
+            confidence: firm
+            detail: "A JSON Web Token (JWT) was found."
+            remediation: "Investigate if the application uses JSON Web Tokens and run all appropriate tests."
+    end if
