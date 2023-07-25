@@ -1,0 +1,23 @@
+metadata:
+    language: v1-beta
+    name: "BCheck Discovery JWK Set"
+    description: "Look for standard endpoints of JWK Sets."
+    author: "Lisandre.com"
+
+run for each:
+    potential_path =
+        "/jwks.json",
+        "/.well-known/jwks.json"
+
+given host then
+    send request called check:
+        method: "GET"
+        path: {potential_path}
+
+    if {check.response.status_code} is "200" then
+        report issue:
+            severity: info
+            confidence: certain
+            detail: `JWK Set found at {potential_path}.`
+            remediation: "Test for JWT authentication bypass via algorithm confusion."
+    end if
