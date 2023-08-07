@@ -1,0 +1,15 @@
+metadata:
+    language: v1-beta
+    name: "BCheck Discovery OAuth (passive)"
+    description: "Keyword oauth was found."
+    author: "Lisandre.com"
+    tags: "passive"
+
+given response then
+    if {latest.response} matches "oauth" then
+        report issue:
+            severity: info
+            confidence: firm
+            detail: "Keyword oauth was found."
+            remediation: "Investigate if the application uses OAuth and run all appropriate tests."
+    end if
