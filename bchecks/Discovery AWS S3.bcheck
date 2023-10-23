@@ -1,0 +1,15 @@
+metadata:
+    language: v1-beta
+    name: "BCheck Discovery AWS S3 Bucket (passive)"
+    description: "AWS S3 bucket found."
+    author: "Lisandre.com"
+    tags: "passive"
+
+given response then
+    if {latest.response.body} matches "s3\..*amazonaws\.com" then
+        report issue:
+            severity: info
+            confidence: firm
+            detail: "AWS S3 bucket found."
+            remediation: "Investigate the AWS S3 bucket."
+    end if
