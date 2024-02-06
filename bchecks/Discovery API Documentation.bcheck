@@ -1,0 +1,26 @@
+metadata:
+    language: v1-beta
+    name: "BCheck Discovery API Documentation"
+    description: "Look for standard API documentation."
+    author: "Lisandre.com"
+
+run for each:
+    potential_path =
+        "/api",
+        "/swagger/index.html",
+        "/api/swagger/v1",
+        "/api/swagger",
+        "/openapi.json"
+
+given host then
+    send request called check:
+        method: "GET"
+        path: {potential_path}
+
+    if {check.response.status_code} is "200" then
+        report issue:
+            severity: info
+            confidence: certain
+            detail: `API documentation found at {potential_path}.`
+            remediation: "API documentation should not be publicly accessible."
+    end if
